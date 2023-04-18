@@ -41,11 +41,11 @@ class DeviceRecord extends State {
   }
 
   //TASK 2 - Write a getter and a setter for a field called last_update
-  setlastUpdate(date) {
-    return (this.lastUpdate = date);
+  getLastUpdate() {
+    return this.last_update;
   }
-  getlastUpdate() {
-    return this.lastUpdate;
+  setLastUpdate(last_update) {
+    return (this.last_update = last_update);
   }
   //Helper functions
 

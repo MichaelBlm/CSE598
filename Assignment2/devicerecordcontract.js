@@ -99,7 +99,7 @@ class DeviceRecordContract extends Contract {
     //TASK 0
     await ctx.deviceRecordList.addDRecord(drecord);
     // Add device record by calling the method addDRecord in the deviceRecordList
-    throw new Error();
+    //throw new Error();
     return drecord.toBuffer();
   }
 
@@ -124,7 +124,7 @@ class DeviceRecordContract extends Contract {
     //Use setLastUpdate from DeviceRecord to update the last_update field
     //Use updateDRecord from deviceRecordList to update the record on the ledger
     let drecord = await ctx.deviceRecordList.getDRecord(drecordKey);
-    drecord.setlastUpdate(last_update);
+    drecord.setLastUpdate(last_update);
     await ctx.deviceRecordList.updateDRecord(drecord);
     return drecord.toBuffer();
   }
