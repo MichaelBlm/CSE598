@@ -47,7 +47,7 @@ class DeviceRecordContract extends Contract {
   //  Read more about unknownTransaction here: https://hyperledger.github.io/fabric-chaincode-node/master/api/fabric-contract-api.Contract.html
   async unknownTransaction(ctx) {
     // GRADED FUNCTION
-    throw new Error();
+    throw new Error("Function name missing");
   }
 
   async afterTransaction(ctx, result) {
@@ -208,11 +208,17 @@ class DeviceRecordContract extends Contract {
     //      Construct the JSON couch DB selector queryString that uses device_typeIndex
     //      Pass the Query string built to queryWithQueryString
     let queryString = {
-        "selector": {
-            "device_type": device_type
-        },
-        "use_index":["_design/device_typeIndexDoc", "device_typeIndex"]
-    }
+      selector: {
+        device_type: device_type,
+      },
+      use_index: ["_design/device_typeIndexDoc", "device_typeIndex"],
+    };
+
+    let recordsList = await this.queryWithQueryString(
+      ctx,
+      JSON.stringify(queryString)
+    );
+    return recordsList;
   }
 
   /**
@@ -221,12 +227,22 @@ class DeviceRecordContract extends Contract {
    * @param {Context} ctx the transaction context
    * @param {String} device_type device_type to queried
    */
-  /*async queryByDevice_Type_Dual(ctx, device_type1, device_type2) {
-        //      TASK-6: Write a CouchDB selector query that queries using two device types
-        //      and uses the index created for device type
-        //      Construct the JSON couch DB selector queryString that uses two device type indexe
-        //      Pass the Query string built to queryWithQueryString
-    }*/
+  async queryByDevice_Type_Dual(ctx, device_type1, device_type2) {
+    //      TASK-6: Write a CouchDB selector query that queries using two device types
+    //      and uses the index created for device type
+    //      Construct the JSON couch DB selector queryString that uses two device type indexe
+    //      Pass the Query string built to queryWithQueryString
+    let queryString = {
+      selector: {
+        device_type: {
+          $in: [device_type1, device_type2],
+        },
+      },
+      use_index: ["_design/device_typeIndexDoc", "device_typeIndex"],
+    };
+    let res = await this.queryWithQueryString(ctx, JSON.stringify(queryString));
+    return res;
+  }
 }
 
 module.exports = DeviceRecordContract;
